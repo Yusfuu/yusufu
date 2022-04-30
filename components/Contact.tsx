@@ -42,7 +42,7 @@ export const Contact = () => {
               color='button1'
               display={{ base: 'block', md: 'inline' }}>
               {' '}
-              Front-end Development
+              Javascript Development
             </chakra.span>
             <br />
             Feel free to get in touch and talk more about your projects.
