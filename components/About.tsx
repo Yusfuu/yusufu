@@ -14,7 +14,7 @@ export const About = () => {
     <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
       <SlideInView>
         <Stack spacing={4}>
-          <Heading fontSize='2xl'>⚡ About Me</Heading>
+          <Heading fontSize='2xl'>About Me 🚀</Heading>
           <Text
             color='textSecondary'
             fontSize={{ base: '14px', md: '16px' }}
@@ -23,14 +23,14 @@ export const About = () => {
             web development.
             <br />
             <br />
-            I've gained a lot of experience from youcode school internships and
-            projects, and I'm also a quick learner who isn't hesitant to try out
-            new technologies as well as problem-solving abilities that are
-            intuitive.
+            I&apos;ve gained a lot of experience from youcode school internships
+            and projects, and I&apos;m also a quick learner who isn&apos;t
+            hesitant to try out new technologies as well as problem-solving
+            abilities that are intuitive.
             <br />
-            I've worked with a lot of frameworks, Especially express in node js,
-            React in JavaScript, and Laravel in PHP, for the versioning part I
-            used Git, GitHub and for the testing part used jest.
+            I&apos;ve worked with a lot of frameworks, Especially express in
+            node js, React in JavaScript, and Laravel in PHP, for the versioning
+            part I used Git, GitHub and for the testing part used jest.
             <br /> Youcode Projects Helped me a lot to strengthen my skills in
             Those Technologies, Team working, and team management as I was
             almost the lead in all of my groups.

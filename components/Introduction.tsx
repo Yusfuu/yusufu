@@ -51,7 +51,7 @@ export const Introduction = () => {
               alt=''
             />
             <Text className='relative text-3xl z-10 font-medium'>
-              Hey there! 👋, I'm-
+              Hey there! 👋, I&apos;m-
             </Text>
           </Box>
           <Heading

@@ -37,7 +37,7 @@ export const Contact = () => {
 
         <SlideInView>
           <Text fontSize='md' color='textSecondary' textAlign='center'>
-            I'm currently specializing in.
+            I&apos;m currently specializing in.
             <chakra.span
               color='button1'
               display={{ base: 'block', md: 'inline' }}>
