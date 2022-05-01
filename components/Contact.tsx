@@ -16,13 +16,13 @@ export const Contact = () => {
           <Text fontSize='md' color='textSecondary' textAlign='center'>
             I&apos;m currently specializing in.
             <chakra.span
-              color='button1'
+              className='text-yellow-300'
               display={{ base: 'block', md: 'inline' }}>
               {' '}
               Javascript Development
             </chakra.span>
             <br />
-            Feel free to get in touch and talk more about your projects.
+            Feel free to get in touch and talk to me.
           </Text>
         </SlideInView>
 

@@ -10,13 +10,12 @@ export const Introduction = () => {
           transition={{ enter: { duration: 0.4, delay: 0.7 } }}>
           <Box className='relative'>
             <Image
-              src='https://svgsilh.com/svg/26432.svg'
-              filter='invert(0.1)'
+              src='/dots.svg'
               w={{ base: '70px', md: '150px' }}
               top={{ base: '0', md: '-15' }}
               left={{ base: '-5', md: '-10' }}
               alt='dots'
-              className='absolute z-0'
+              className='absolute z-0 invert-[0.1]'
             />
             <Text className='relative text-3xl z-10 font-medium'>
               Hey there! 👋, I&apos;m-
@@ -42,7 +41,8 @@ export const Introduction = () => {
             <Box color='displayColor' as='span'>
               Full Stack <span className='text-yellow-300'>javascript</span>{' '}
               developer.
-            </Box>{' '}
+              <br />
+            </Box>
             A self-taught {'developer with an\ninterest in Computer Science.'}
           </Heading>
         </SlideFade>

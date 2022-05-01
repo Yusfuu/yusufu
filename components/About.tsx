@@ -43,13 +43,8 @@ export const About = () => {
             maxW={{ base: '300px', lg: '350px' }}
             maxH={{ base: '300px', lg: '350px' }}>
             <Image
-              src='https://svgsilh.com/svg/26432.svg'
-              filter='invert(0.1)'
-              zIndex={3}
-              position='absolute'
-              top={0}
-              right={0}
-              w={{ base: '100px', lg: '150px' }}
+              src='/dots.svg'
+              className='absolute top-0 right-0 z-30 invert-[0.1] w-40'
               alt='js'
             />
             <Image
