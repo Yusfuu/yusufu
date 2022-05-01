@@ -52,7 +52,7 @@ export const About = () => {
               w={{ base: '300px', lg: '350px' }}
               h={{ base: '300px', lg: '350px' }}
               alt='Youssef Hajjari'
-              className='object-cover rounded-full'
+              className='object-cover relative rounded-full'
             />
           </Box>
         </Flex>
