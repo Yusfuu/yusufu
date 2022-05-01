@@ -7,7 +7,8 @@ export default {
     locale: 'en_IE',
     url: 'https://youssef-hajjari.vercel.app',
     site_name: 'Youssef Hajjari',
-    description: 'Open Graph Description',
+    description:
+      'Full Stack Javascript Developer | React | Node | GraphQL | Next.js | Express | MongoDB',
   },
   twitter: {
     handle: '@Yosufuu',
