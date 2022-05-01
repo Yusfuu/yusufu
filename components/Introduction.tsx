@@ -1,36 +1,5 @@
-import {
-  Link,
-  Text,
-  Stack,
-  Heading,
-  Box,
-  Button,
-  SlideFade,
-  Image,
-} from '@chakra-ui/react';
-import {
-  GitHubLogoIcon,
-  LinkedInLogoIcon,
-  EnvelopeClosedIcon,
-} from '@radix-ui/react-icons';
-
-const social = [
-  {
-    name: 'github',
-    href: 'https://github.com/Yusfuu',
-    icon: <GitHubLogoIcon />,
-  },
-  {
-    name: 'linkedin',
-    href: 'https://www.linkedin.com/in/youssef-hajjari',
-    icon: <LinkedInLogoIcon />,
-  },
-  {
-    name: 'email',
-    href: 'mailto:youssefhajjari01@gmail.com',
-    icon: <EnvelopeClosedIcon />,
-  },
-];
+import { Text, Stack, Heading, Box, SlideFade, Image } from '@chakra-ui/react';
+import { Social } from './Social';
 
 export const Introduction = () => {
   return (
@@ -44,11 +13,10 @@ export const Introduction = () => {
               src='https://svgsilh.com/svg/26432.svg'
               filter='invert(0.1)'
               w={{ base: '70px', md: '150px' }}
-              position='absolute'
               top={{ base: '0', md: '-15' }}
               left={{ base: '-5', md: '-10' }}
-              zIndex={0}
-              alt=''
+              alt='dots'
+              className='absolute z-0'
             />
             <Text className='relative text-3xl z-10 font-medium'>
               Hey there! 👋, I&apos;m-
@@ -89,15 +57,7 @@ export const Introduction = () => {
         <SlideFade
           in={true}
           transition={{ enter: { duration: 0.4, delay: 1.0 } }}>
-          <Stack isInline spacing={4}>
-            {social.map(({ href, name, icon }) => (
-              <Link key={href} href={href} isExternal>
-                <Button leftIcon={icon} className='capitalize' color='white'>
-                  {name}
-                </Button>
-              </Link>
-            ))}
-          </Stack>
+          <Social />
         </SlideFade>
       </Stack>
     </Stack>
