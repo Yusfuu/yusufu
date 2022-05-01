@@ -9,6 +9,7 @@ export default {
     site_name: 'Youssef Hajjari',
     description:
       'Full Stack Javascript Developer | React | Node | GraphQL | Next.js | Express | MongoDB',
+    images: [{ url: '/yusfuu.jpeg' }],
   },
   twitter: {
     handle: '@Yosufuu',
