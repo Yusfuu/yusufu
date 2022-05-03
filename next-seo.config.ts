@@ -1,3 +1,5 @@
+import { NextSeoProps } from 'next-seo';
+
 export default {
   title: 'Youssef Hajjari | Javascript Developer',
   description: 'full stack javascript developer',
@@ -16,4 +18,4 @@ export default {
     site: '@Yosufuu',
     cardType: 'summary_large_image',
   },
-};
+} as NextSeoProps;
