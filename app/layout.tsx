@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Bebas_Neue, Outfit, JetBrains_Mono } from 'next/font/google';
+import { ReactLenis } from 'lenis/react';
 import './globals.css';
 
 const bebasNeue = Bebas_Neue({
@@ -42,7 +43,9 @@ export const metadata: Metadata = {
     'Casablanca',
     'Morocco',
   ],
-  authors: [{ name: 'Youssef Hajjari', url: 'https://youssef-hajjari.vercel.app' }],
+  authors: [
+    { name: 'Youssef Hajjari', url: 'https://youssef-hajjari.vercel.app' },
+  ],
   creator: 'Youssef Hajjari',
   openGraph: {
     type: 'website',
@@ -50,8 +53,16 @@ export const metadata: Metadata = {
     url: 'https://youssef-hajjari.vercel.app',
     siteName: 'Youssef Hajjari',
     title: 'Youssef Hajjari — Full Stack JavaScript Developer',
-    description: 'Self-taught Full Stack developer from Casablanca building scalable web apps.',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Youssef Hajjari' }],
+    description:
+      'Self-taught Full Stack developer from Casablanca building scalable web apps.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Youssef Hajjari',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -72,12 +83,21 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
-      data-theme="dark"
+      lang='en'
+      data-theme='dark'
       suppressHydrationWarning
-      className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
-    >
-      <body suppressHydrationWarning>{children}</body>
+      className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
+      <body suppressHydrationWarning>
+        <ReactLenis
+          root
+          options={{
+            lerp: 0.1,
+            smoothWheel: true,
+            syncTouch: false,
+          }}>
+          {children}
+        </ReactLenis>
+      </body>
     </html>
   );
 }

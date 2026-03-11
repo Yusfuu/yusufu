@@ -6,17 +6,9 @@ import About from '@/components/About';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 
-// All components that touch window/document must be ssr:false — fixes hydration
-const ParticleCanvas = dynamic(() => import('@/components/ParticleCanvas'), {
-  ssr: false,
-});
-const CustomCursor = dynamic(() => import('@/components/CustomCursor'), {
-  ssr: false,
-});
 const GrainOverlay = dynamic(() => import('@/components/GrainOverlay'), {
   ssr: false,
 });
-
 const SpotifyWidget = dynamic(() => import('@/components/SpotifyWidget'), {
   ssr: false,
 });
@@ -30,7 +22,6 @@ const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), {
 export default function Home() {
   return (
     <>
-      {/* Inject theme before paint — prevents flash of wrong theme */}
       <script
         dangerouslySetInnerHTML={{
           __html: `try{var t=localStorage.getItem('yh-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}`,
@@ -38,8 +29,6 @@ export default function Home() {
       />
 
       <GrainOverlay />
-      <CustomCursor />
-      <ParticleCanvas />
       <KonamiEasterEgg />
       <ThemeToggle />
 
@@ -90,7 +79,7 @@ export default function Home() {
             fontSize: '11px',
             color: 'var(--color-ghost)',
           }}>
-          Next.js 15 · Framer Motion
+          Next.js · Framer Motion
         </span>
       </footer>
 

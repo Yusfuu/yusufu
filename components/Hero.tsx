@@ -84,7 +84,7 @@ export default function Hero() {
       {/* Left cyan glow */}
       <motion.div
         aria-hidden='true'
-        animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.18, 0.1] }}
+        animate={{ opacity: [0.1, 0.18, 0.1] }}
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         style={{
           position: 'absolute',
@@ -311,10 +311,7 @@ export default function Hero() {
           {/* Warm glow behind fox */}
           <motion.div
             aria-hidden='true'
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.5, 0.8, 0.5],
-            }}
+            animate={{ opacity: [0.5, 0.8, 0.5] }}
             transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               position: 'absolute',
@@ -417,6 +414,7 @@ export default function Hero() {
               alignItems: 'center',
               gap: '8px',
               backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
               boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
               zIndex: 2,
             }}>
@@ -450,6 +448,7 @@ export default function Hero() {
               alignItems: 'center',
               gap: '8px',
               backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
               boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
               zIndex: 2,
             }}>
