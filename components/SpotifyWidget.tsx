@@ -190,7 +190,6 @@ export default function SpotifyWidget() {
                   alt={data.album ?? 'album art'}
                   fill
                   style={{ objectFit: 'cover' }}
-                  unoptimized
                 />
                 <div
                   style={{
