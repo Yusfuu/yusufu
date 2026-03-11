@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
@@ -54,7 +54,27 @@ function fmtTime(ms: number) {
 export default function SpotifyWidget() {
   const [data, setData] = useState<NowPlaying | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const widgetRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (!expanded) return;
+    const close = () => setExpanded(false);
+    window.addEventListener('scroll', close, { passive: true });
+    return () => window.removeEventListener('scroll', close);
+  }, [expanded]);
+
+  useEffect(() => {
+    if (!expanded) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (widgetRef.current && !widgetRef.current.contains(e.target as Node)) {
+        setExpanded(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [expanded]);
+
+  const pollRef = useRef<(() => Promise<void>) | undefined>(undefined);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -62,15 +82,12 @@ export default function SpotifyWidget() {
       try {
         const res = await fetch('/api/spotify', { cache: 'no-store' });
         const json = await res.json();
-
         setData(json);
-
-        if (json.progress !== undefined) {
-          setProgress(json.progress);
-        }
+        if (json.progress !== undefined) setProgress(json.progress);
       } catch {}
     };
 
+    pollRef.current = poll;
     poll();
 
     const id = setInterval(poll, 30_000);
@@ -78,12 +95,16 @@ export default function SpotifyWidget() {
   }, []);
 
   useEffect(() => {
-    if (!data?.isPlaying) return;
+    if (!data?.isPlaying || !data?.duration) return;
 
     const id = setInterval(() => {
       setProgress((p) => {
-        if (!data.duration) return p;
-        return Math.min(p + 1000, data.duration);
+        const next = Math.min(p + 1000, data.duration!);
+        // Song ended locally — immediately refetch instead of waiting 30s
+        if (next >= data.duration!) {
+          setTimeout(() => pollRef.current?.(), 500);
+        }
+        return next;
       });
     }, 1000);
 
@@ -97,10 +118,11 @@ export default function SpotifyWidget() {
 
   return (
     <motion.div
+      ref={widgetRef}
       initial={{ x: 120, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      onClick={() => data.isPlaying && setExpanded((e) => !e)}
+      onClick={() => !expanded && data.isPlaying && setExpanded(true)}
       style={{
         position: 'fixed',
         bottom: '28px',
