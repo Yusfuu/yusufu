@@ -55,24 +55,45 @@ export default function SpotifyWidget() {
   const [data, setData] = useState<NowPlaying | null>(null);
   const [expanded, setExpanded] = useState(false);
 
+  const [progress, setProgress] = useState(0);
+
   useEffect(() => {
     const poll = async () => {
       try {
-        const res = await fetch('/api/spotify');
-        setData(await res.json());
-      } catch {
-        /* silently fail */
-      }
+        const res = await fetch('/api/spotify', { cache: 'no-store' });
+        const json = await res.json();
+
+        setData(json);
+
+        if (json.progress !== undefined) {
+          setProgress(json.progress);
+        }
+      } catch {}
     };
+
     poll();
+
     const id = setInterval(poll, 30_000);
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    if (!data?.isPlaying) return;
+
+    const id = setInterval(() => {
+      setProgress((p) => {
+        if (!data.duration) return p;
+        return Math.min(p + 1000, data.duration);
+      });
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, [data?.isPlaying, data?.duration]);
+
   if (!data) return null;
 
   const progressPct =
-    data.progress && data.duration ? (data.progress / data.duration) * 100 : 0;
+    progress && data?.duration ? (progress / data.duration) * 100 : 0;
 
   return (
     <motion.div
@@ -257,7 +278,7 @@ export default function SpotifyWidget() {
                     fontSize: '9px',
                     color: 'var(--color-ghost)',
                   }}>
-                  {data.progress ? fmtTime(data.progress) : '0:00'}
+                  {fmtTime(progress)}
                 </span>
                 <span
                   style={{
