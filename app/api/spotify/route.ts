@@ -1,4 +1,3 @@
-import { ServerRuntime } from 'next';
 import { NextResponse } from 'next/server';
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID!;
@@ -52,5 +51,3 @@ export async function GET() {
     return NextResponse.json({ isPlaying: false });
   }
 }
-
-export const runtime: ServerRuntime = 'edge';
