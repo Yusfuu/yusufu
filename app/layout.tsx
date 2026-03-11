@@ -55,21 +55,12 @@ export const metadata: Metadata = {
     title: 'Youssef Hajjari — Full Stack JavaScript Developer',
     description:
       'Self-taught Full Stack developer from Casablanca building scalable web apps.',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Youssef Hajjari',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Youssef Hajjari — Full Stack JavaScript Developer',
     description: 'Self-taught Full Stack developer from Casablanca.',
     creator: '@Yosufuu',
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,
