@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
+  const mounted = typeof window !== 'undefined';
   const [visible, setVisible] = useState(false);
   const [clicking, setClicking] = useState(false);
-  const rawX = useMotionValue(-100);
-  const rawY = useMotionValue(-100);
+
+  const rawX = useMotionValue(-200);
+  const rawY = useMotionValue(-200);
 
   const springX = useSpring(rawX, { stiffness: 500, damping: 40 });
   const springY = useSpring(rawY, { stiffness: 500, damping: 40 });
-
-  // Slower follower dot
   const followerX = useSpring(rawX, { stiffness: 120, damping: 20 });
   const followerY = useSpring(rawY, { stiffness: 120, damping: 20 });
 
@@ -24,9 +24,11 @@ export default function CustomCursor() {
     };
     const down = () => setClicking(true);
     const up = () => setClicking(false);
+
     window.addEventListener('mousemove', move);
     window.addEventListener('mousedown', down);
     window.addEventListener('mouseup', up);
+
     return () => {
       window.removeEventListener('mousemove', move);
       window.removeEventListener('mousedown', down);
@@ -34,11 +36,11 @@ export default function CustomCursor() {
     };
   }, [rawX, rawY]);
 
-  if (typeof window === 'undefined') return null;
+  // Don't render on server or mobile (no pointer events)
+  if (!mounted) return null;
 
   return (
     <>
-      {/* Main cursor dot */}
       <motion.div
         style={{
           position: 'fixed',
@@ -53,11 +55,9 @@ export default function CustomCursor() {
           zIndex: 9999,
           pointerEvents: 'none',
           opacity: visible ? 1 : 0,
-          transition: 'width 0.1s, height 0.1s',
           mixBlendMode: 'screen',
         }}
       />
-      {/* Follower ring */}
       <motion.div
         style={{
           position: 'fixed',
@@ -73,10 +73,8 @@ export default function CustomCursor() {
           pointerEvents: 'none',
           opacity: visible ? 1 : 0,
           scale: clicking ? 0.7 : 1,
-          transition: 'scale 0.1s',
         }}
       />
-      {/* Ambient glow */}
       <motion.div
         style={{
           position: 'fixed',

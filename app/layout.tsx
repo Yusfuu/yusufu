@@ -22,35 +22,62 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Youssef Hajjari | Full Stack JavaScript Developer',
+  metadataBase: new URL('https://youssef-hajjari.vercel.app'),
+  title: {
+    default: 'Youssef Hajjari — Full Stack JavaScript Developer',
+    template: '%s | Youssef Hajjari',
+  },
   description:
-    'Self-taught Full Stack JavaScript developer from Casablanca. Building scalable web applications with React, Node.js, TypeScript, and GraphQL.',
+    'Self-taught Full Stack JavaScript developer from Casablanca. Specializing in React, Next.js, Node.js, TypeScript and GraphQL. Open to new opportunities.',
   keywords: [
-    'JavaScript',
+    'Youssef Hajjari',
+    'Yusfuu',
+    'Full Stack Developer',
+    'JavaScript Developer',
     'TypeScript',
     'React',
+    'Next.js',
     'Node.js',
-    'Full Stack Developer',
+    'GraphQL',
     'Casablanca',
+    'Morocco',
   ],
+  authors: [{ name: 'Youssef Hajjari', url: 'https://youssef-hajjari.vercel.app' }],
+  creator: 'Youssef Hajjari',
   openGraph: {
-    title: 'Youssef Hajjari | Full Stack JavaScript Developer',
-    description: 'Building exceptional digital experiences from Casablanca.',
-    url: 'https://youssef-hajjari.vercel.app',
     type: 'website',
+    locale: 'en_US',
+    url: 'https://youssef-hajjari.vercel.app',
+    siteName: 'Youssef Hajjari',
+    title: 'Youssef Hajjari — Full Stack JavaScript Developer',
+    description: 'Self-taught Full Stack developer from Casablanca building scalable web apps.',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Youssef Hajjari' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Youssef Hajjari — Full Stack JavaScript Developer',
+    description: 'Self-taught Full Stack developer from Casablanca.',
+    creator: '@Yosufuu',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang='en'
-      className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
-      <body>{children}</body>
+      lang="en"
+      data-theme="dark"
+      suppressHydrationWarning
+      className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}
+    >
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

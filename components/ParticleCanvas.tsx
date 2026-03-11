@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 interface Particle {
   x: number;
@@ -21,14 +21,14 @@ export default function ParticleCanvas() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext('2d')!;
 
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener('resize', resize);
 
     const count = 90;
     particlesRef.current = Array.from({ length: count }, () => ({
@@ -99,12 +99,12 @@ export default function ParticleCanvas() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -112,11 +112,11 @@ export default function ParticleCanvas() {
     <canvas
       ref={canvasRef}
       style={{
-        position: "fixed",
+        position: 'fixed',
         top: 0,
         left: 0,
         zIndex: 0,
-        pointerEvents: "none",
+        pointerEvents: 'none',
       }}
     />
   );

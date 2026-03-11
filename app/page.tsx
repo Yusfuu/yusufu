@@ -1,38 +1,61 @@
-import Navbar from '@/components/Navbar';
+'use client';
+
+import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
-import ParticleCanvas from '@/components/ParticleCanvas';
-import CustomCursor from '@/components/CustomCursor';
-import GrainOverlay from '@/components/GrainOverlay';
-import LoadingScreen from '@/components/LoadingScreen';
-import SpotifyWidget from '@/components/SpotifyWidget';
-import KonamiEasterEgg from '@/components/KonamiEasterEgg';
+
+// All components that touch window/document must be ssr:false — fixes hydration
+const ParticleCanvas = dynamic(() => import('@/components/ParticleCanvas'), {
+  ssr: false,
+});
+const CustomCursor = dynamic(() => import('@/components/CustomCursor'), {
+  ssr: false,
+});
+const GrainOverlay = dynamic(() => import('@/components/GrainOverlay'), {
+  ssr: false,
+});
+
+const SpotifyWidget = dynamic(() => import('@/components/SpotifyWidget'), {
+  ssr: false,
+});
+const KonamiEasterEgg = dynamic(() => import('@/components/KonamiEasterEgg'), {
+  ssr: false,
+});
+const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
     <>
-      <LoadingScreen />
+      {/* Inject theme before paint — prevents flash of wrong theme */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `try{var t=localStorage.getItem('yh-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}`,
+        }}
+      />
+
       <GrainOverlay />
       <CustomCursor />
       <ParticleCanvas />
       <KonamiEasterEgg />
+      <ThemeToggle />
 
-      {/* Grid overlay */}
+      {/* Subtle grid overlay */}
       <div
+        aria-hidden='true'
         style={{
           position: 'fixed',
           inset: 0,
           backgroundImage:
-            'linear-gradient(rgba(0,212,255,0.022) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.022) 1px, transparent 1px)',
+            'linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)',
           backgroundSize: '64px 64px',
           zIndex: 0,
           pointerEvents: 'none',
         }}
       />
-
-      <Navbar />
 
       <main style={{ position: 'relative', zIndex: 1 }}>
         <Hero />
@@ -45,31 +68,32 @@ export default function Home() {
         style={{
           position: 'relative',
           zIndex: 1,
-          borderTop: '1px solid rgba(255,255,255,0.05)',
-          padding: '28px 60px',
+          borderTop: '1px solid var(--color-border)',
+          padding: 'clamp(20px, 4vw, 28px) clamp(24px, 8vw, 60px)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '8px',
         }}>
         <span
           style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '11px',
-            color: '#374151',
+            color: 'var(--color-ghost)',
           }}>
-          © 2025 Youssef Hajjari
+          © 2026 Youssef Hajjari
         </span>
         <span
           style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '11px',
-            color: '#374151',
+            color: 'var(--color-ghost)',
           }}>
-          Next.js 15 · Framer Motion · Matter.js
+          Next.js 15 · Framer Motion
         </span>
       </footer>
 
-      {/* Floating widgets */}
       <SpotifyWidget />
     </>
   );

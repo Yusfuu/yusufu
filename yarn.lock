@@ -2271,11 +2271,6 @@ language-tags@^1.0.9:
   dependencies:
     language-subtag-registry "^0.3.20"
 
-lenis@^1.3.18:
-  version "1.3.18"
-  resolved "https://registry.yarnpkg.com/lenis/-/lenis-1.3.18.tgz#813c37374934cd33ef8d6aa35c3d085ec9f0be04"
-  integrity sha512-7KBl3V7vx5y1h05pu9fNFZS66I0+1eZ+zUGNNNBKtEn3BONZy+nkHWvdEe2b+zKT+6WX1x7zyOb1zbYYOs6tcg==
-
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.4.1.tgz#ae4562c007473b932a6200d403268dd2fffc6ade"
