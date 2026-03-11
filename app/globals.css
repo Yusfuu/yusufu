@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+
+
+
+/* ── Dark theme (default) ── */
+:root,
+[data-theme="dark"] {
+  --color-bg: #060609;
+  --color-surface: #0d0d12;
+  --color-surface2: #12121a;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border2: rgba(255, 255, 255, 0.10);
+  --color-cyan: #00d4ff;
+  --color-purple: #a855f7;
+  --color-text: #f0f0f0;
+  --color-text2: #d1d5db;
+  --color-muted: #9ca3af;
+  --color-faint: #6b7280;
+  --color-ghost: #374151;
+  --color-accent1: rgba(0, 212, 255, 0.12);
+  --color-accent2: rgba(168, 85, 247, 0.12);
+  --shadow-card: 0 24px 60px rgba(0, 0, 0, 0.5);
+  --grid-line: rgba(0, 212, 255, 0.022);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Light theme ── */
+[data-theme="light"] {
+  --color-bg: #f5f4f0;
+  --color-surface: #eeecea;
+  --color-surface2: #e6e4e0;
+  --color-border: rgba(0, 0, 0, 0.07);
+  --color-border2: rgba(0, 0, 0, 0.12);
+  --color-cyan: #0090b3;
+  --color-purple: #7c3aed;
+  --color-text: #0f0f0f;
+  --color-text2: #1f1f1f;
+  --color-muted: #4b5563;
+  --color-faint: #6b7280;
+  --color-ghost: #9ca3af;
+  --color-accent1: rgba(0, 144, 179, 0.08);
+  --color-accent2: rgba(124, 58, 237, 0.08);
+  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.08);
+  --grid-line: rgba(0, 0, 0, 0.04);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  /* Lenis handles this */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  /* Smooth all color/bg transitions */
+  transition:
+    background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Apply theme transition to all elements */
+*,
+*::before,
+*::after {
+  transition:
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* But don't slow down motion animations */
+[style*="transform"],
+canvas,
+.no-transition {
+  transition: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cyan);
+  border-radius: 2px;
+}
+
+::selection {
+  background: rgba(0, 212, 255, 0.18);
+  color: var(--color-cyan);
 }
