@@ -159,7 +159,7 @@ function TechCard({
             width={44}
             height={44}
             style={{ display: 'block', imageRendering: 'crisp-edges' }}
-            loading='lazy'
+            unoptimized
           />
         </motion.div>
 

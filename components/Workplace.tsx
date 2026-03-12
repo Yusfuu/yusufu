@@ -11,6 +11,18 @@ interface WorkplaceCardProps {
   url?: string;
 }
 
+/** "Norsys Group" → "NG" · "YouCode · UM6P" → "YU" · "Sanlam" → "SA" */
+function getInitials(name: string): string {
+  const words = name
+    .replace(/[·•\-]/g, ' ') // treat separators as spaces
+    .split(/\s+/)
+    .filter(Boolean);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return (words[0][0] + words[1][0]).toUpperCase();
+}
+
+const isCurrent = (period: string) => /present|current|now/i.test(period);
+
 export function WorkplaceCard({
   company,
   role,
@@ -20,6 +32,8 @@ export function WorkplaceCard({
 }: WorkplaceCardProps) {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLSpanElement>(null);
+  const current = isCurrent(period);
+  const initials = getInitials(company);
 
   return (
     <span
@@ -30,17 +44,17 @@ export function WorkplaceCard({
       {/* Trigger */}
       <motion.span
         whileHover={{ scale: 1.04 }}
+        onClick={() => url && window.open(url, '_blank', 'noreferrer')}
         style={{
           fontFamily: 'var(--font-mono)',
           fontSize: '13px',
           color: 'var(--color-cyan)',
-          cursor: 'default',
+          cursor: url ? 'pointer' : 'default',
           display: 'inline-flex',
           alignItems: 'center',
           gap: '4px',
           position: 'relative',
         }}>
-        {/* animated underline */}
         <span style={{ position: 'relative' }}>
           {company}
           <motion.span
@@ -78,12 +92,10 @@ export function WorkplaceCard({
             style={{
               position: 'absolute',
               bottom: 'calc(100% + 12px)',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              left: '-12px',
               zIndex: 50,
               minWidth: '240px',
             }}>
-            {/* Card */}
             <div
               style={{
                 background: 'var(--color-surface)',
@@ -95,7 +107,7 @@ export function WorkplaceCard({
                 backdropFilter: 'blur(20px)',
                 WebkitBackdropFilter: 'blur(20px)',
               }}>
-              {/* Header — animated gradient banner */}
+              {/* Banner */}
               <div
                 style={{
                   position: 'relative',
@@ -115,7 +127,6 @@ export function WorkplaceCard({
                     backgroundSize: '200% 200%',
                   }}
                 />
-                {/* Grid lines on banner */}
                 <div
                   style={{
                     position: 'absolute',
@@ -125,7 +136,7 @@ export function WorkplaceCard({
                     backgroundSize: '20px 20px',
                   }}
                 />
-                {/* Company initial */}
+                {/* Dynamic initials */}
                 <div
                   style={{
                     position: 'absolute',
@@ -152,11 +163,12 @@ export function WorkplaceCard({
                       alignItems: 'center',
                       justifyContent: 'center',
                       fontFamily: 'var(--font-display)',
-                      fontSize: '22px',
+                      fontSize: '20px',
                       color: 'var(--color-cyan)',
                       backdropFilter: 'blur(8px)',
+                      letterSpacing: '0.05em',
                     }}>
-                    DF
+                    {initials}
                   </motion.div>
                 </div>
               </div>
@@ -174,7 +186,7 @@ export function WorkplaceCard({
                       rel='noreferrer'
                       onClick={(e) => e.stopPropagation()}
                       style={{ textDecoration: 'none' }}>
-                      <p
+                      <div
                         style={{
                           fontFamily: 'var(--font-body)',
                           fontSize: '13px',
@@ -183,10 +195,10 @@ export function WorkplaceCard({
                           marginBottom: '2px',
                         }}>
                         {company}
-                      </p>
+                      </div>
                     </a>
                   ) : (
-                    <p
+                    <div
                       style={{
                         fontFamily: 'var(--font-body)',
                         fontSize: '13px',
@@ -195,9 +207,10 @@ export function WorkplaceCard({
                         marginBottom: '2px',
                       }}>
                       {company}
-                    </p>
+                    </div>
                   )}
-                  <p
+
+                  <div
                     style={{
                       fontFamily: 'var(--font-mono)',
                       fontSize: '10px',
@@ -205,9 +218,8 @@ export function WorkplaceCard({
                       marginBottom: '12px',
                     }}>
                     {role}
-                  </p>
+                  </div>
 
-                  {/* Divider */}
                   <div
                     style={{
                       height: '1px',
@@ -216,13 +228,13 @@ export function WorkplaceCard({
                     }}
                   />
 
-                  {/* Meta row */}
                   <div
                     style={{
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
                     }}>
+                    {/* Location */}
                     <div
                       style={{
                         display: 'flex',
@@ -240,24 +252,37 @@ export function WorkplaceCard({
                         {location}
                       </span>
                     </div>
+
+                    {/* Period + dot */}
                     <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
                       }}>
-                      {/* Live indicator */}
-                      <motion.span
-                        animate={{ opacity: [1, 0.3, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        style={{
-                          width: '5px',
-                          height: '5px',
-                          borderRadius: '50%',
-                          background: '#22c55e',
-                          display: 'inline-block',
-                        }}
-                      />
+                      {current ? (
+                        <motion.span
+                          animate={{ opacity: [1, 0.3, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          style={{
+                            width: '5px',
+                            height: '5px',
+                            borderRadius: '50%',
+                            background: '#22c55e',
+                            display: 'inline-block',
+                          }}
+                        />
+                      ) : (
+                        <span
+                          style={{
+                            width: '5px',
+                            height: '5px',
+                            borderRadius: '50%',
+                            background: 'var(--color-ghost)',
+                            display: 'inline-block',
+                          }}
+                        />
+                      )}
                       <span
                         style={{
                           fontFamily: 'var(--font-mono)',
@@ -273,13 +298,13 @@ export function WorkplaceCard({
               </div>
             </div>
 
-            {/* Arrow pointing down */}
+            {/* Arrow */}
             <div
               style={{
                 position: 'absolute',
                 bottom: '-6px',
-                left: '50%',
-                transform: 'translateX(-50%) rotate(45deg)',
+                left: '20px',
+                transform: 'rotate(45deg)',
                 width: '10px',
                 height: '10px',
                 background: 'var(--color-surface)',
