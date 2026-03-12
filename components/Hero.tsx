@@ -102,7 +102,6 @@ export default function Hero() {
 
       {/* Two-column hero layout */}
       <div className='hero-layout'>
-        {/* ── LEFT: text content ── */}
         <motion.div
           variants={container}
           initial='hidden'
@@ -295,7 +294,6 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* ── RIGHT: Fox illustration ── */}
         <motion.div
           className='hero-image-wrapper'
           initial={{ opacity: 0, scale: 0.85, x: 40 }}
