@@ -125,12 +125,11 @@ function TechCard({
             transform: 'translateZ(20px)',
           }}>
           <Image
-            src={`https://skillicons.dev/icons?i=${tech.key}&theme=dark`}
+            src={`/icons/${tech.key}.svg`}
             alt={tech.name}
             width={44}
             height={44}
             style={{ display: 'block', imageRendering: 'crisp-edges' }}
-            unoptimized
           />
         </motion.div>
 
