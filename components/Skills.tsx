@@ -103,8 +103,8 @@ function TechCard({
           borderRadius: '14px',
           overflow: 'hidden',
           cursor: 'default',
-          border: `1px solid ${hovered ? tech.color + '44' : 'rgba(255,255,255,0.06)'}`,
-          background: hovered ? `rgba(0,0,0,0.6)` : 'rgba(255,255,255,0.03)',
+          border: `1px solid ${hovered ? tech.color + '44' : 'var(--color-border)'}`,
+          background: hovered ? 'var(--color-surface)' : 'var(--color-surface)',
           transition: 'border-color 0.25s, background 0.25s',
           padding: 'clamp(16px, 3vw, 24px) clamp(12px, 2.5vw, 20px)',
           display: 'flex',
@@ -287,15 +287,15 @@ export default function Skills() {
               style={{
                 padding: '6px 16px',
                 borderRadius: '100px',
-                border: `1px solid ${activeCategory === cat ? 'rgba(0,212,255,0.5)' : 'rgba(255,255,255,0.08)'}`,
+                border: `1px solid ${activeCategory === cat ? 'rgba(0,212,255,0.5)' : 'var(--color-border)'}`,
                 background:
                   activeCategory === cat
                     ? 'rgba(0,212,255,0.08)'
-                    : 'transparent',
+                    : 'var(--color-surface)',
                 color:
                   activeCategory === cat
                     ? 'var(--color-cyan)'
-                    : 'var(--color-ghost)',
+                    : 'var(--color-muted)',
                 fontFamily: 'var(--font-mono)',
                 fontSize: '10px',
                 letterSpacing: '0.1em',
