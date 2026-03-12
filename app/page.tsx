@@ -4,6 +4,7 @@ import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import GrainOverlay from '@/components/GrainOverlay';
 import ClientWidgets from '@/components/Clientwidgets';
+import { stack } from '@/lib/constants';
 
 export default function Home() {
   return (
@@ -64,7 +65,22 @@ export default function Home() {
             fontSize: '11px',
             color: 'var(--color-ghost)',
           }}>
-          Next.js · Framer Motion
+          Built with ❤️ using{' '}
+          {stack.map((tech, i) => (
+            <span key={tech.name}>
+              <a
+                href={tech.url}
+                target='_blank'
+                rel='noopener noreferrer'
+                style={{
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}>
+                {tech.name}
+              </a>
+              {i < stack.length - 1 && ' · '}
+            </span>
+          ))}
         </span>
       </footer>
     </>

@@ -45,4 +45,10 @@ export const socialLinks = [
   { name: 'twitter', url: 'https://twitter.com/Yosufuu' },
 ];
 
+export const stack = [
+  { name: 'Next.js', url: 'https://nextjs.org' },
+  { name: 'Framer Motion', url: 'https://www.framer.com/motion/' },
+  { name: 'Lenis', url: 'https://lenis.darkroom.engineering/' },
+];
+
 export type Category = (typeof categories)[number];

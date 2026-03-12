@@ -212,6 +212,7 @@ export default function SpotifyWidget() {
                   alt={data.album ?? 'album art'}
                   fill
                   style={{ objectFit: 'cover' }}
+                  sizes='(max-width: 768px) 80px, 120px'
                 />
                 <div
                   style={{
