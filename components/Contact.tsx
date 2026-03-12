@@ -2,13 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-
-const links = [
-  { name: 'github', url: 'https://github.com/Yusfuu' },
-  { name: 'linkedin', url: 'https://www.linkedin.com/in/youssef-hajjari' },
-  { name: 'medium', url: 'https://medium.com/@yusfuu' },
-  { name: 'twitter', url: 'https://twitter.com/Yosufuu' },
-];
+import { socialLinks as links } from '@/lib/constants';
 
 export default function Contact() {
   const ref = useRef(null);

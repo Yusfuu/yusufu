@@ -1,23 +1,9 @@
-'use client';
-
-import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
-
-const GrainOverlay = dynamic(() => import('@/components/GrainOverlay'), {
-  ssr: false,
-});
-const SpotifyWidget = dynamic(() => import('@/components/SpotifyWidget'), {
-  ssr: false,
-});
-const KonamiEasterEgg = dynamic(() => import('@/components/KonamiEasterEgg'), {
-  ssr: false,
-});
-const ThemeToggle = dynamic(() => import('@/components/ThemeToggle'), {
-  ssr: false,
-});
+import GrainOverlay from '@/components/GrainOverlay';
+import ClientWidgets from '@/components/Clientwidgets';
 
 export default function Home() {
   return (
@@ -29,8 +15,7 @@ export default function Home() {
       />
 
       <GrainOverlay />
-      <KonamiEasterEgg />
-      <ThemeToggle />
+      <ClientWidgets />
 
       {/* Subtle grid overlay */}
       <div
@@ -82,8 +67,6 @@ export default function Home() {
           Next.js · Framer Motion
         </span>
       </footer>
-
-      <SpotifyWidget />
     </>
   );
 }

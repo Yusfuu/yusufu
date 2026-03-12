@@ -10,36 +10,7 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 import Image from 'next/image';
-
-const categories = ['All', 'Frontend', 'Backend', 'Database', 'Tools'] as const;
-type Category = (typeof categories)[number];
-
-const techs: { name: string; key: string; color: string; cat: Category }[] = [
-  // Frontend
-  { name: 'JavaScript', key: 'js', color: '#f7df1e', cat: 'Frontend' },
-  { name: 'TypeScript', key: 'ts', color: '#3178c6', cat: 'Frontend' },
-  { name: 'React', key: 'react', color: '#61dafb', cat: 'Frontend' },
-  { name: 'Next.js', key: 'nextjs', color: '#ffffff', cat: 'Frontend' },
-  { name: 'Vite', key: 'vite', color: '#646cff', cat: 'Frontend' },
-  // Backend
-  { name: 'Node.js', key: 'nodejs', color: '#68a063', cat: 'Backend' },
-  { name: 'Express', key: 'express', color: '#cccccc', cat: 'Backend' },
-  { name: 'GraphQL', key: 'graphql', color: '#e10098', cat: 'Backend' },
-  { name: 'PHP', key: 'php', color: '#777bb4', cat: 'Backend' },
-  { name: 'Laravel', key: 'laravel', color: '#ff2d20', cat: 'Backend' },
-  // Database
-  { name: 'MongoDB', key: 'mongodb', color: '#47a248', cat: 'Database' },
-  { name: 'PostgreSQL', key: 'postgres', color: '#336791', cat: 'Database' },
-  { name: 'MySQL', key: 'mysql', color: '#4479a1', cat: 'Database' },
-  { name: 'Redis', key: 'redis', color: '#dc382d', cat: 'Database' },
-  { name: 'Prisma', key: 'prisma', color: '#5a67d8', cat: 'Database' },
-  // Tools
-  { name: 'Docker', key: 'docker', color: '#2496ed', cat: 'Tools' },
-  { name: 'Git', key: 'git', color: '#f05032', cat: 'Tools' },
-  { name: 'Jest', key: 'jest', color: '#c21325', cat: 'Tools' },
-  { name: 'Webpack', key: 'webpack', color: '#8dd6f9', cat: 'Tools' },
-  { name: 'GitHub', key: 'github', color: '#ffffff', cat: 'Tools' },
-];
+import { categories, techs, type Category } from '@/lib/constants';
 
 function TechCard({
   tech,
