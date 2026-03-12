@@ -11,15 +11,14 @@ import {
 } from 'framer-motion';
 import Image from 'next/image';
 import { categories, techs, type Category } from '@/lib/constants';
+import { SectionHeader } from './SectionHeader';
 
 function TechCard({
   tech,
   index,
-  inView,
 }: {
   tech: (typeof techs)[number];
   index: number;
-  inView: boolean;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
@@ -54,7 +53,8 @@ function TechCard({
   return (
     <motion.div
       initial={{ opacity: 0, y: 32, scale: 0.88 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      viewport={{ once: true, margin: '-80px' }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{
         duration: 0.5,
         delay: index * 0.04,
@@ -184,61 +184,7 @@ export default function Skills() {
           maxWidth: '960px',
           margin: '0 auto',
         }}>
-        {/* Label + drawing line */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px',
-            marginBottom: '20px',
-          }}>
-          <motion.p
-            initial={{ opacity: 0, x: -20 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              letterSpacing: '0.2em',
-              color: 'var(--color-cyan)',
-              textTransform: 'uppercase',
-              whiteSpace: 'nowrap',
-            }}>
-            02 / stack
-          </motion.p>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={inView ? { scaleX: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              flex: 1,
-              height: '1px',
-              background:
-                'linear-gradient(to right, rgba(0,212,255,0.3), transparent)',
-              transformOrigin: '0%',
-            }}
-          />
-        </div>
-
-        {/* Heading */}
-        <div
-          style={{
-            overflow: 'hidden',
-            marginBottom: 'clamp(28px, 4vw, 44px)',
-          }}>
-          <motion.h2
-            initial={{ y: '100%', opacity: 0 }}
-            animate={inView ? { y: '0%', opacity: 1 } : {}}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(40px, 8vw, 72px)',
-              lineHeight: 0.95,
-              color: 'var(--color-text)',
-            }}>
-            Technologies
-          </motion.h2>
-        </div>
+        <SectionHeader heading='Technologies' label='stack' index='02' />
 
         {/* Category filter */}
         <motion.div
@@ -295,7 +241,7 @@ export default function Skills() {
               gap: 'clamp(8px, 1.5vw, 14px)',
             }}>
             {filtered.map((tech, i) => (
-              <TechCard key={tech.key} tech={tech} index={i} inView={inView} />
+              <TechCard key={tech.key} tech={tech} index={i} />
             ))}
           </motion.div>
         </AnimatePresence>

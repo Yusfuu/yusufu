@@ -427,41 +427,6 @@ export default function Hero() {
           }}
         />
       </motion.div>
-
-      <style>{`
-        @keyframes gradientShift {
-          0%   { background-position: 0 50%; }
-          100% { background-position: 200% 50%; }
-        }
-
-        .hero-layout {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: clamp(40px, 6vw, 80px);
-        }
-
-        .hero-image-wrapper {
-          width: clamp(260px, 36vw, 440px);
-          height: clamp(260px, 36vw, 440px);
-          flex-shrink: 0;
-        }
-
-        /* Mobile: stack vertically, image on top */
-        @media (max-width: 768px) {
-          .hero-layout {
-            flex-direction: column-reverse;
-            align-items: flex-start;
-            gap: 40px;
-          }
-
-          .hero-image-wrapper {
-            width: clamp(160px, 55vw, 260px);
-            height: clamp(160px, 55vw, 260px);
-            align-self: center;
-          }
-        }
-      `}</style>
     </section>
   );
 }

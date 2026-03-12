@@ -51,4 +51,6 @@ export const stack = [
   { name: 'Lenis', url: 'https://lenis.darkroom.engineering/' },
 ];
 
+export const EASE = [0.16, 1, 0.3, 1] as const;
+
 export type Category = (typeof categories)[number];

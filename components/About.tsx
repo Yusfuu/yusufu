@@ -1,22 +1,22 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { WorkplaceCard } from './Workplace';
+import { SectionHeader } from './SectionHeader';
 
 function AnimatedLine({
   children,
   delay,
-  inView,
 }: {
   children: React.ReactNode;
   delay: number;
-  inView: boolean;
 }) {
   return (
     <motion.span
+      viewport={{ once: true }}
       initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
-      animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
       style={{ display: 'inline' }}>
       {children}
@@ -26,7 +26,6 @@ function AnimatedLine({
 
 export default function About() {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
     <section
@@ -40,58 +39,7 @@ export default function About() {
         maxWidth: '960px',
         margin: '0 auto',
       }}>
-      {/* Label + drawing line */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          marginBottom: '20px',
-        }}>
-        <motion.p
-          initial={{ opacity: 0, x: -16 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
-            letterSpacing: '0.2em',
-            color: 'var(--color-cyan)',
-            textTransform: 'uppercase',
-            whiteSpace: 'nowrap',
-          }}>
-          01 / about
-        </motion.p>
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            flex: 1,
-            height: '1px',
-            background:
-              'linear-gradient(to right, rgba(0,212,255,0.3), transparent)',
-            transformOrigin: '0%',
-          }}
-        />
-      </div>
-
-      {/* Heading */}
-      <div
-        style={{ overflow: 'hidden', marginBottom: 'clamp(28px, 4vw, 44px)' }}>
-        <motion.h2
-          initial={{ y: '100%', opacity: 0 }}
-          animate={inView ? { y: '0%', opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(40px, 8vw, 72px)',
-            lineHeight: 0.95,
-            color: 'var(--color-text)',
-          }}>
-          Who I Am
-        </motion.h2>
-      </div>
+      <SectionHeader heading='Who I Am' label='about' index='01' />
 
       {/* Prose block */}
       <div
@@ -102,7 +50,7 @@ export default function About() {
           maxWidth: '680px',
           marginBottom: 'clamp(36px, 5vw, 56px)',
         }}>
-        <AnimatedLine delay={0.25} inView={inView}>
+        <AnimatedLine delay={0.25}>
           I&apos;m a self-taught Full Stack developer from{' '}
           <span style={{ color: 'var(--color-text)', fontWeight: 500 }}>
             Casablanca, Morocco
@@ -110,7 +58,7 @@ export default function About() {
           — building interfaces and APIs that feel fast and intentional.{' '}
         </AnimatedLine>
 
-        <AnimatedLine delay={0.4} inView={inView}>
+        <AnimatedLine delay={0.4}>
           I trained at{' '}
           <WorkplaceCard
             company='YouCode · UM6P'
@@ -139,7 +87,7 @@ export default function About() {
           {'.  '}
         </AnimatedLine>
 
-        <AnimatedLine delay={0.55} inView={inView}>
+        <AnimatedLine delay={0.55}>
           Built hotel booking infrastructure at{' '}
           <WorkplaceCard
             company='Nuitee'
@@ -160,7 +108,7 @@ export default function About() {
           {'.  '}
         </AnimatedLine>
 
-        <AnimatedLine delay={0.7} inView={inView}>
+        <AnimatedLine delay={0.7}>
           I gravitate toward{' '}
           <span
             style={{

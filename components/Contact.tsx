@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { socialLinks as links } from '@/lib/constants';
+import { SectionHeader } from './SectionHeader';
 
 export default function Contact() {
   const ref = useRef(null);
@@ -38,57 +39,17 @@ export default function Contact() {
         }}
       />
 
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          marginBottom: '20px',
-        }}>
-        <motion.p
-          initial={{ opacity: 0, x: -16 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
-            letterSpacing: '0.2em',
-            color: 'var(--color-cyan)',
-            textTransform: 'uppercase',
-            whiteSpace: 'nowrap',
-          }}>
-          03 / contact
-        </motion.p>
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            flex: 1,
-            height: '1px',
-            background:
-              'linear-gradient(to right, rgba(0,212,255,0.3), transparent)',
-            transformOrigin: '0%',
-          }}
-        />
-      </div>
-
-      <div style={{ overflow: 'hidden', marginBottom: '24px' }}>
-        <motion.h2
-          initial={{ y: '100%', opacity: 0 }}
-          animate={inView ? { y: '0%', opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(44px, 9vw, 96px)',
-            lineHeight: 0.92,
-            color: 'var(--color-text)',
-          }}>
-          Let&apos;s Build
-          <br />
-          Something.
-        </motion.h2>
-      </div>
+      <SectionHeader
+        heading={
+          <>
+            Let&apos;s Build
+            <br />
+            Something.
+          </>
+        }
+        label='contact'
+        index='03'
+      />
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}

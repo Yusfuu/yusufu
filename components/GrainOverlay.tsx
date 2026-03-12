@@ -15,20 +15,7 @@ export default function GrainOverlay() {
           backgroundSize: '128px 128px',
         }}
       />
-      <style>{`
-        @keyframes grain {
-          0%,100% { transform: translate(0,0); }
-          10%      { transform: translate(-2%,-2%); }
-          20%      { transform: translate(2%,1%); }
-          30%      { transform: translate(-1%,3%); }
-          40%      { transform: translate(3%,-1%); }
-          50%      { transform: translate(-2%,2%); }
-          60%      { transform: translate(1%,-3%); }
-          70%      { transform: translate(-3%,1%); }
-          80%      { transform: translate(2%,3%); }
-          90%      { transform: translate(-1%,-2%); }
-        }
-      `}</style>
+
       <div
         style={{
           position: 'fixed',

@@ -8,7 +8,7 @@ interface WorkplaceCardProps {
   role: string;
   location: string;
   period: string;
-  url?: string;
+  url: string;
 }
 
 /** "Norsys Group" → "NG" · "YouCode · UM6P" → "YU" · "Sanlam" → "SA" */
@@ -179,25 +179,12 @@ export function WorkplaceCard({
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.3 }}>
-                  {url ? (
-                    <a
-                      href={url}
-                      target='_blank'
-                      rel='noreferrer'
-                      onClick={(e) => e.stopPropagation()}
-                      style={{ textDecoration: 'none' }}>
-                      <div
-                        style={{
-                          fontFamily: 'var(--font-body)',
-                          fontSize: '13px',
-                          fontWeight: 600,
-                          color: 'var(--color-text)',
-                          marginBottom: '2px',
-                        }}>
-                        {company}
-                      </div>
-                    </a>
-                  ) : (
+                  <a
+                    href={url}
+                    target='_blank'
+                    rel='noreferrer'
+                    onClick={(e) => e.stopPropagation()}
+                    style={{ textDecoration: 'none' }}>
                     <div
                       style={{
                         fontFamily: 'var(--font-body)',
@@ -208,8 +195,7 @@ export function WorkplaceCard({
                       }}>
                       {company}
                     </div>
-                  )}
-
+                  </a>
                   <div
                     style={{
                       fontFamily: 'var(--font-mono)',
