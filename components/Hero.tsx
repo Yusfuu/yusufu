@@ -4,6 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useTextScramble } from '@/lib/useTextScramble';
 import Image from 'next/image';
 import { useRef } from 'react';
+import { socialLinks as socials } from '@/lib/constants';
 
 const container = {
   hidden: {},
@@ -19,16 +20,10 @@ const lineVariant = {
   },
 };
 
-const socials = [
-  { label: 'github', url: 'https://github.com/Yusfuu' },
-  { label: 'linkedin', url: 'https://www.linkedin.com/in/youssef-hajjari' },
-  { label: 'medium', url: 'https://medium.com/@yusfuu' },
-];
-
 export default function Hero() {
   const { text: name } = useTextScramble('YOUSSEF HAJJARI', 400);
   const imageRef = useRef<HTMLDivElement>(null);
-
+  const mounted = typeof window !== 'undefined';
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), {
@@ -105,7 +100,7 @@ export default function Hero() {
         <motion.div
           variants={container}
           initial='hidden'
-          animate='show'
+          animate={mounted ? 'show' : 'hidden'}
           style={{ flex: '1 1 0', minWidth: 0 }}>
           {/* Status badge */}
           <div style={{ overflow: 'hidden', marginBottom: '28px' }}>
@@ -273,7 +268,7 @@ export default function Hero() {
               }}>
               {socials.map((s) => (
                 <motion.a
-                  key={s.label}
+                  key={s.name}
                   href={s.url}
                   target='_blank'
                   rel='noreferrer'
@@ -287,7 +282,7 @@ export default function Hero() {
                   }}
                   whileHover={{ color: 'var(--color-cyan)', y: -2 }}
                   transition={{ duration: 0.2 }}>
-                  {s.label} ↗
+                  {s.name} ↗
                 </motion.a>
               ))}
             </motion.div>
@@ -323,23 +318,9 @@ export default function Hero() {
             }}
           />
 
-          {/* Decorative ring */}
-          <motion.div
-            aria-hidden='true'
-            animate={{ rotate: 360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-            style={{
-              position: 'absolute',
-              inset: '-8px',
-              borderRadius: '50%',
-              border: '1px dashed rgba(0,212,255,0.12)',
-              pointerEvents: 'none',
-              zIndex: 0,
-            }}
-          />
-
           {/* Floating image with tilt */}
           <motion.div
+            initial={{ y: 0 }}
             ref={imageRef}
             animate={{ y: [0, -14, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
@@ -351,6 +332,19 @@ export default function Hero() {
               perspective: 800,
               cursor: 'none',
             }}>
+            <motion.div
+              aria-hidden='true'
+              animate={{ rotate: 360 }}
+              transition={{ duration: 500, repeat: Infinity, ease: 'linear' }}
+              style={{
+                position: 'absolute',
+                inset: '-24px',
+                borderRadius: '50%',
+                border: '1.5px dashed rgba(0,212,255,0.12)',
+                pointerEvents: 'none',
+                zIndex: 0,
+              }}
+            />
             <motion.div
               style={{
                 rotateX,
@@ -393,74 +387,6 @@ export default function Hero() {
                 }}
               />
             </motion.div>
-          </motion.div>
-
-          {/* Floating tag: stack */}
-          <motion.div
-            initial={{ opacity: 0, y: 10, x: -10 }}
-            animate={{ opacity: 1, y: 0, x: 0 }}
-            transition={{ delay: 1.4, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              position: 'absolute',
-              bottom: '8%',
-              left: '-8%',
-              background: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
-              borderRadius: '8px',
-              padding: '8px 14px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-              zIndex: 2,
-            }}>
-            <span style={{ fontSize: '14px' }}>⚡</span>
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '10px',
-                color: 'var(--color-muted)',
-                letterSpacing: '0.08em',
-                whiteSpace: 'nowrap',
-              }}>
-              Next.js · TypeScript
-            </span>
-          </motion.div>
-
-          {/* Floating tag: location */}
-          <motion.div
-            initial={{ opacity: 0, y: -10, x: 10 }}
-            animate={{ opacity: 1, y: 0, x: 0 }}
-            transition={{ delay: 1.6, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              position: 'absolute',
-              top: '8%',
-              right: '-4%',
-              background: 'var(--color-surface)',
-              border: '1px solid rgba(0,212,255,0.15)',
-              borderRadius: '8px',
-              padding: '8px 14px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
-              zIndex: 2,
-            }}>
-            <span style={{ fontSize: '14px' }}>📍</span>
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '10px',
-                color: 'var(--color-cyan)',
-                letterSpacing: '0.08em',
-                whiteSpace: 'nowrap',
-              }}>
-              Casablanca, MA
-            </span>
           </motion.div>
         </motion.div>
       </div>
