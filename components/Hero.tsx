@@ -330,7 +330,6 @@ export default function Hero() {
               position: 'relative',
               zIndex: 1,
               perspective: 800,
-              cursor: 'none',
             }}>
             <motion.div
               aria-hidden='true'
@@ -341,7 +340,7 @@ export default function Hero() {
                 inset: '-24px',
                 borderRadius: '50%',
                 border: '1.5px dashed rgba(0,212,255,0.12)',
-                pointerEvents: 'none',
+
                 zIndex: 0,
               }}
             />
@@ -350,7 +349,6 @@ export default function Hero() {
                 rotateX,
                 rotateY,
                 transformStyle: 'preserve-3d',
-                userSelect: 'none',
               }}>
               <Image
                 sizes='(max-width: 768px) 55vw, (max-width: 1200px) 32vw, 400px'
@@ -370,8 +368,6 @@ export default function Hero() {
                   boxShadow:
                     '0 0 0 1px rgba(0,212,255,0.08), 0 24px 80px rgba(0,0,0,0.5), 0 0 60px rgba(255,100,30,0.1)',
                   filter: 'contrast(1.02) saturate(1.05)',
-                  userSelect: 'none',
-                  pointerEvents: 'none',
                 }}
               />
 

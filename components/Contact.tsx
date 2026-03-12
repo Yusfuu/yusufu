@@ -105,16 +105,12 @@ export default function Contact() {
           justifyContent: 'center',
           flexWrap: 'wrap',
         }}>
-        {links.map((link, i) => (
+        {links.map((s) => (
           <motion.a
-            key={link.name}
-            href={link.url}
+            key={s.name}
+            href={s.url}
             target='_blank'
             rel='noreferrer'
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ delay: 0.8 + i * 0.08 }}
             style={{
               color: 'var(--color-ghost)',
               textDecoration: 'none',
@@ -123,8 +119,9 @@ export default function Contact() {
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
             }}
-            whileHover={{ color: 'var(--color-cyan)', y: -2 }}>
-            {link.name} ↗
+            whileHover={{ color: 'var(--color-cyan)', y: -2 }}
+            transition={{ duration: 0.2 }}>
+            {s.name} ↗
           </motion.a>
         ))}
       </div>

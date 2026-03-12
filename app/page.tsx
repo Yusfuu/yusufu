@@ -64,6 +64,7 @@ export default function Home() {
             fontFamily: 'var(--font-mono)',
             fontSize: '11px',
             color: 'var(--color-ghost)',
+            margin: '0 auto',
           }}>
           Built with ❤️ using{' '}
           {stack.map((tech, i) => (
