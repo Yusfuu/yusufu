@@ -10,7 +10,7 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 import Image from 'next/image';
-import { categories, techs, type Category } from '@/lib/constants';
+import { categories, EASE, techs, type Category } from '@/lib/constants';
 import { SectionHeader } from './SectionHeader';
 
 function TechCard({
@@ -58,7 +58,7 @@ function TechCard({
       transition={{
         duration: 0.5,
         delay: index * 0.04,
-        ease: [0.16, 1, 0.3, 1],
+        ease: EASE,
       }}
       style={{ perspective: '600px' }}>
       <motion.div
@@ -119,7 +119,7 @@ function TechCard({
         {/* Icon */}
         <motion.div
           animate={hovered ? { scale: 1.15, y: -2 } : { scale: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.3, ease: EASE }}
           style={{
             transformStyle: 'preserve-3d',
             transform: 'translateZ(20px)',

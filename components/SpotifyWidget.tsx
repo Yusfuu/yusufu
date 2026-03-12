@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { EASE } from '@/lib/constants';
 
 interface NowPlaying {
   isPlaying: boolean;
@@ -121,7 +122,7 @@ export default function SpotifyWidget() {
       ref={widgetRef}
       initial={{ x: 120, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ delay: 3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ delay: 3, duration: 0.6, ease: EASE }}
       onClick={() => !expanded && data.isPlaying && setExpanded(true)}
       style={{
         position: 'fixed',
@@ -190,7 +191,7 @@ export default function SpotifyWidget() {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.25, ease: EASE }}
             style={{
               width: '260px',
               background: 'var(--color-surface)',

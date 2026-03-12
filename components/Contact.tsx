@@ -1,18 +1,13 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { socialLinks as links } from '@/lib/constants';
 import { SectionHeader } from './SectionHeader';
 
 export default function Contact() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-
   return (
     <section
       id='contact'
-      ref={ref}
       aria-label='Contact'
       style={{
         position: 'relative',
@@ -53,7 +48,8 @@ export default function Contact() {
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
         transition={{ delay: 0.6, duration: 0.8 }}
         style={{
           color: 'var(--color-muted)',
@@ -69,7 +65,8 @@ export default function Contact() {
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
         transition={{ delay: 0.7 }}
         style={{
           display: 'flex',
@@ -115,7 +112,8 @@ export default function Contact() {
             target='_blank'
             rel='noreferrer'
             initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
             transition={{ delay: 0.8 + i * 0.08 }}
             style={{
               color: 'var(--color-ghost)',

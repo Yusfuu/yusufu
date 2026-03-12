@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { WorkplaceCard } from './Workplace';
 import { SectionHeader } from './SectionHeader';
+import { EASE } from '@/lib/constants';
 
 function AnimatedLine({
   children,
@@ -17,7 +17,7 @@ function AnimatedLine({
       viewport={{ once: true }}
       initial={{ opacity: 0, y: 14, filter: 'blur(4px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.75, delay, ease: EASE }}
       style={{ display: 'inline' }}>
       {children}
     </motion.span>
@@ -25,12 +25,9 @@ function AnimatedLine({
 }
 
 export default function About() {
-  const ref = useRef(null);
-
   return (
     <section
       id='about'
-      ref={ref}
       aria-label='About me'
       style={{
         position: 'relative',

@@ -4,7 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useTextScramble } from '@/lib/useTextScramble';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { socialLinks as socials } from '@/lib/constants';
+import { EASE, socialLinks as socials } from '@/lib/constants';
 
 const container = {
   hidden: {},
@@ -16,7 +16,7 @@ const lineVariant = {
   show: {
     y: '0%',
     opacity: 1,
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const },
+    transition: { duration: 0.9, ease: EASE },
   },
 };
 
@@ -293,7 +293,7 @@ export default function Hero() {
           className='hero-image-wrapper'
           initial={{ opacity: 0, scale: 0.85, x: 40 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
           style={{
             flex: '0 0 auto',
             display: 'flex',
