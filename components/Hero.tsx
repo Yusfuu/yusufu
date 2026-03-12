@@ -353,7 +353,8 @@ export default function Hero() {
                 userSelect: 'none',
               }}>
               <Image
-                src='/pmdr-2025.png'
+                sizes='(max-width: 768px) 55vw, (max-width: 1200px) 32vw, 400px'
+                src='/pmdr.webp'
                 alt='Youssef Hajjari — creative portrait'
                 width={400}
                 height={400}
