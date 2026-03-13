@@ -155,18 +155,37 @@ export default function Hero() {
 
           {/* Name */}
           <div style={{ overflow: 'hidden' }}>
-            <motion.h1
-              variants={lineVariant}
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(44px, 11vw, 128px)',
-                lineHeight: 0.88,
-                letterSpacing: '0.02em',
-                color: 'var(--color-text)',
-                marginBottom: '4px',
-              }}>
-              {name}
-            </motion.h1>
+            <motion.div variants={lineVariant} style={{ position: 'relative' }}>
+              {/*  Invisible real text  (for crawlers) */}
+              <h1
+                aria-hidden
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(44px, 11vw, 128px)',
+                  lineHeight: 0.88,
+                  letterSpacing: '0.02em',
+                  visibility: 'hidden',
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                }}>
+                YOUSSEF HAJJARI
+              </h1>
+
+              <h1
+                aria-label='Youssef Hajjari'
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(44px, 11vw, 128px)',
+                  lineHeight: 0.88,
+                  letterSpacing: '0.02em',
+                  color: 'var(--color-text)',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                }}>
+                {name}
+              </h1>
+            </motion.div>
           </div>
 
           {/* Gradient tagline */}

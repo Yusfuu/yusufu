@@ -55,18 +55,23 @@ export const metadata: Metadata = {
     title: 'Youssef Hajjari — Full Stack JavaScript Developer',
     description:
       'Self-taught Full Stack developer from Casablanca building scalable web apps.',
+    images: [
+      { url: '/og.webp', width: 1200, height: 630, alt: 'Youssef Hajjari' },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Youssef Hajjari — Full Stack JavaScript Developer',
     description: 'Self-taught Full Stack developer from Casablanca.',
     creator: '@Yosufuu',
+    images: ['/og.webp'],
   },
   robots: {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
+  alternates: { canonical: 'https://youssef-hajjari.vercel.app' },
 };
 
 export default function RootLayout({
@@ -74,11 +79,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
+      suppressHydrationWarning
       lang='en'
       data-theme='dark'
-      suppressHydrationWarning
       className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
-      <body suppressHydrationWarning>
+      <body>
         <ReactLenis
           root
           options={{

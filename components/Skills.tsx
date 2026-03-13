@@ -75,7 +75,7 @@ function TechCard({
           overflow: 'hidden',
           cursor: 'default',
           border: `1px solid ${hovered ? tech.color + '44' : 'var(--color-border)'}`,
-          background: hovered ? 'var(--color-surface)' : 'var(--color-surface)',
+          background: 'var(--color-surface)',
           transition: 'border-color 0.25s, background 0.25s',
           padding: 'clamp(16px, 3vw, 24px) clamp(12px, 2.5vw, 20px)',
           display: 'flex',
