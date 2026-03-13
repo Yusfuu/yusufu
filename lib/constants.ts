@@ -53,9 +53,6 @@ export const techs: {
   { name: 'AWS', key: 'aws', color: '#ff9900', cat: 'Tools' },
   { name: 'Terraform', key: 'terraform', color: '#f05032', cat: 'Tools' },
   { name: 'GitHub', key: 'github', color: '#ffffff', cat: 'Tools' },
-  { name: 'Jest', key: 'jest', color: '#c21325', cat: 'Tools' },
-  { name: 'Vitest', key: 'vitest', color: '#6e9f18', cat: 'Tools' },
-  { name: 'Cypress', key: 'cypress', color: '#69d3a7', cat: 'Tools' },
 ];
 
 export const socialLinks = [
