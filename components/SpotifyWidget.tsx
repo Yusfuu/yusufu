@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { EASE } from '@/lib/constants';
+import { EASE, OFFLINE_MSGS, POLL_INTERVAL } from '@/lib/constants';
 
 interface NowPlaying {
   isPlaying: boolean;
@@ -16,7 +16,7 @@ interface NowPlaying {
   duration?: number;
 }
 
-function BarVisualizer() {
+const BarVisualizer = memo(function BarVisualizer() {
   return (
     <div
       style={{
@@ -25,14 +25,14 @@ function BarVisualizer() {
         gap: '2px',
         height: '14px',
       }}>
-      {[1, 2, 3, 4].map((i) => (
+      {[0.15, 0.3, 0.45, 0.6].map((delay, i) => (
         <motion.span
           key={i}
           animate={{ height: ['30%', '100%', '50%', '80%', '30%'] }}
           transition={{
             duration: 0.9,
             repeat: Infinity,
-            delay: i * 0.15,
+            delay,
             ease: 'easeInOut',
           }}
           style={{
@@ -46,37 +46,94 @@ function BarVisualizer() {
       ))}
     </div>
   );
+});
+
+function OfflineMessage() {
+  const [idx, setIdx] = useState(() =>
+    Math.floor(Math.random() * OFFLINE_MSGS.length),
+  );
+
+  useEffect(() => {
+    const id = setInterval(
+      () => setIdx((i) => (i + 1) % OFFLINE_MSGS.length),
+      8000,
+    );
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <span
+      style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '11px',
+        color: 'var(--color-faint)',
+        whiteSpace: 'nowrap',
+      }}>
+      {OFFLINE_MSGS[idx]}
+    </span>
+  );
+}
+
+function AlbumSkeleton() {
+  return (
+    <div
+      style={{
+        width: '100%',
+        aspectRatio: '1/1',
+        background: 'var(--color-surface2)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        style={{
+          width: '28px',
+          height: '28px',
+          borderRadius: '50%',
+          border: '2px solid var(--color-border2)',
+          borderTopColor: '#1DB954',
+        }}
+      />
+    </div>
+  );
 }
 
 function fmtTime(ms: number) {
-  return `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, '0')}`;
+  return `${Math.floor(ms / 60000)}:${String(
+    Math.floor((ms % 60000) / 1000),
+  ).padStart(2, '0')}`;
 }
 
 export default function SpotifyWidget() {
   const [data, setData] = useState<NowPlaying | null>(null);
   const [expanded, setExpanded] = useState(false);
-  const widgetRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!expanded) return;
-    const close = () => setExpanded(false);
-    window.addEventListener('scroll', close, { passive: true });
-    return () => window.removeEventListener('scroll', close);
-  }, [expanded]);
-
-  useEffect(() => {
-    if (!expanded) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (widgetRef.current && !widgetRef.current.contains(e.target as Node)) {
-        setExpanded(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [expanded]);
-
-  const pollRef = useRef<(() => Promise<void>) | undefined>(undefined);
+  const [imgLoaded, setImgLoaded] = useState(false);
   const [progress, setProgress] = useState(0);
+
+  const widgetRef = useRef<HTMLDivElement>(null);
+  const pollRef = useRef<(() => Promise<void>) | undefined>(undefined);
+
+  // reset skeleton when song changes
+  useEffect(() => setImgLoaded(false), [data?.albumArt]);
+
+  useEffect(() => {
+    if (!expanded) return;
+    const handler = (e: MouseEvent) => {
+      if (widgetRef.current && !widgetRef.current.contains(e.target as Node))
+        setExpanded(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [expanded]);
+
+  useEffect(() => {
+    if (!expanded) return;
+    const handler = () => setExpanded(false);
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, [expanded]);
 
   useEffect(() => {
     const poll = async () => {
@@ -87,35 +144,28 @@ export default function SpotifyWidget() {
         if (json.progress !== undefined) setProgress(json.progress);
       } catch {}
     };
-
     pollRef.current = poll;
     poll();
-
-    const id = setInterval(poll, 30_000);
+    const id = setInterval(poll, POLL_INTERVAL);
     return () => clearInterval(id);
   }, []);
 
   useEffect(() => {
     if (!data?.isPlaying || !data?.duration) return;
-
     const id = setInterval(() => {
       setProgress((p) => {
         const next = Math.min(p + 1000, data.duration!);
-        // Song ended locally — immediately refetch instead of waiting 30s
-        if (next >= data.duration!) {
-          setTimeout(() => pollRef.current?.(), 500);
-        }
+        if (next >= data.duration!) setTimeout(() => pollRef.current?.(), 500);
         return next;
       });
     }, 1000);
-
     return () => clearInterval(id);
   }, [data?.isPlaying, data?.duration]);
 
   if (!data) return null;
 
   const progressPct =
-    progress && data?.duration ? (progress / data.duration) * 100 : 0;
+    progress && data.duration ? (progress / data.duration) * 100 : 0;
 
   return (
     <motion.div
@@ -130,16 +180,19 @@ export default function SpotifyWidget() {
         right: '28px',
         zIndex: 500,
         cursor: data.isPlaying ? 'pointer' : 'default',
+        pointerEvents: data.isPlaying ? 'auto' : 'none',
       }}>
       <AnimatePresence mode='wait'>
         {!expanded ? (
           <motion.div
+            layout
             key='pill'
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2, ease: EASE }}
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
               gap: '10px',
               padding: '10px 16px',
@@ -158,6 +211,7 @@ export default function SpotifyWidget() {
               fill={data.isPlaying ? '#1DB954' : 'var(--color-ghost)'}>
               <path d='M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z' />
             </svg>
+
             {data.isPlaying ? (
               <>
                 <BarVisualizer />
@@ -175,14 +229,7 @@ export default function SpotifyWidget() {
                 </span>
               </>
             ) : (
-              <span
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '11px',
-                  color: 'var(--color-ghost)',
-                }}>
-                not playing
-              </span>
+              <OfflineMessage />
             )}
           </motion.div>
         ) : (
@@ -201,6 +248,7 @@ export default function SpotifyWidget() {
               backdropFilter: 'blur(24px)',
               boxShadow: 'var(--shadow-card)',
             }}>
+            {/* album art + skeleton */}
             {data.albumArt && (
               <div
                 style={{
@@ -208,12 +256,19 @@ export default function SpotifyWidget() {
                   width: '100%',
                   aspectRatio: '1/1',
                 }}>
+                {!imgLoaded && <AlbumSkeleton />}
                 <Image
                   src={data.albumArt}
                   alt={data.album ?? 'album art'}
                   fill
-                  style={{ objectFit: 'cover' }}
-                  sizes='(max-width: 768px) 80px, 120px'
+                  priority={false}
+                  sizes='260px'
+                  style={{
+                    objectFit: 'cover',
+                    opacity: imgLoaded ? 1 : 0,
+                    transition: 'opacity 0.3s ease',
+                  }}
+                  onLoad={() => setImgLoaded(true)}
                 />
                 <div
                   style={{
@@ -221,6 +276,8 @@ export default function SpotifyWidget() {
                     inset: 0,
                     background:
                       'linear-gradient(to bottom, transparent 50%, var(--color-surface) 100%)',
+                    opacity: imgLoaded ? 1 : 0,
+                    transition: 'opacity 0.3s ease',
                   }}
                 />
                 <div
@@ -237,6 +294,8 @@ export default function SpotifyWidget() {
                 </div>
               </div>
             )}
+
+            {/* info */}
             <div style={{ padding: '16px' }}>
               <a
                 href={data.songUrl}
@@ -270,6 +329,8 @@ export default function SpotifyWidget() {
                   {data.artist}
                 </p>
               </a>
+
+              {/* progress bar */}
               <div
                 style={{
                   height: '2px',

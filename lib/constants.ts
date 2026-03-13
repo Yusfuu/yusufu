@@ -6,6 +6,20 @@ export const categories = [
   'Tools',
 ] as const;
 
+export const OFFLINE_MSGS = [
+  'shipping code...',
+  'in the zone 🎯',
+  'git commit -m "vibe"',
+  'console.log(life)',
+  'brewing coffee ☕',
+  'reading the docs',
+  'touching grass 🌿',
+  'thinking deeply...',
+  'npm i happiness',
+];
+
+export const POLL_INTERVAL = 30_000;
+
 export const techs: {
   name: string;
   key: string;
@@ -16,12 +30,7 @@ export const techs: {
   { name: 'JavaScript', key: 'js', color: '#f7df1e', cat: 'Frontend' },
   { name: 'TypeScript', key: 'ts', color: '#3178c6', cat: 'Frontend' },
   { name: 'React', key: 'react', color: '#61dafb', cat: 'Frontend' },
-  {
-    name: 'React Native',
-    key: 'reactnative',
-    color: '#61dafb',
-    cat: 'Frontend',
-  },
+
   { name: 'Next.js', key: 'nextjs', color: '#ffffff', cat: 'Frontend' },
   { name: 'Vue.js', key: 'vue', color: '#42b883', cat: 'Frontend' },
   { name: 'Tailwind', key: 'tailwind', color: '#38bdf8', cat: 'Frontend' },
