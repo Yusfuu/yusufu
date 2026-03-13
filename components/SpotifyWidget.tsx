@@ -115,9 +115,6 @@ export default function SpotifyWidget() {
   const widgetRef = useRef<HTMLDivElement>(null);
   const pollRef = useRef<(() => Promise<void>) | undefined>(undefined);
 
-  // reset skeleton when song changes
-  useEffect(() => setImgLoaded(false), [data?.albumArt]);
-
   useEffect(() => {
     if (!expanded) return;
     const handler = (e: MouseEvent) => {
@@ -166,6 +163,8 @@ export default function SpotifyWidget() {
 
   const progressPct =
     progress && data.duration ? (progress / data.duration) * 100 : 0;
+
+  const albumArt = data?.albumArt;
 
   return (
     <motion.div
@@ -249,7 +248,7 @@ export default function SpotifyWidget() {
               boxShadow: 'var(--shadow-card)',
             }}>
             {/* album art + skeleton */}
-            {data.albumArt && (
+            {albumArt && (
               <div
                 style={{
                   position: 'relative',
@@ -258,7 +257,8 @@ export default function SpotifyWidget() {
                 }}>
                 {!imgLoaded && <AlbumSkeleton />}
                 <Image
-                  src={data.albumArt}
+                  key={albumArt}
+                  src={albumArt}
                   alt={data.album ?? 'album art'}
                   fill
                   priority={false}

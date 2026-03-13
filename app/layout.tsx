@@ -83,7 +83,7 @@ export default function RootLayout({
       lang='en'
       data-theme='dark'
       className={`${bebasNeue.variable} ${outfit.variable} ${jetbrainsMono.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
         <ReactLenis
           root
           options={{

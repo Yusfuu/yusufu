@@ -15,7 +15,6 @@ async function getAccessToken() {
     method: 'POST',
     headers: {
       Authorization: `Basic ${basic}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: new URLSearchParams({
       grant_type: 'refresh_token',
@@ -24,10 +23,12 @@ async function getAccessToken() {
   });
   const response = await res.json();
 
-  cachedToken = {
-    token: response.access_token,
-    expires: Date.now() + (response.expires_in - 60) * 1000,
-  };
+  if (response.access_token && response.expires_in) {
+    cachedToken = {
+      token: response.access_token,
+      expires: Date.now() + (response.expires_in - 60) * 1000,
+    };
+  }
 
   return response;
 }
@@ -45,7 +46,7 @@ export async function GET() {
         next: { revalidate: 30 },
       },
     );
-    if (res.status === 204 || res.status > 400)
+    if (res.status === 204 || res.status >= 400)
       return NextResponse.json({ isPlaying: false });
     const data = await res.json();
     if (!data?.item) return NextResponse.json({ isPlaying: false });
